@@ -345,7 +345,6 @@ function orderByYear(moviesArray) {
     // If the year of the current movie is higher than the previous one keep it there
     // If the year of the current movie is lower than the previous one switch their positions
     // If they're the same year, use their title to order them
-    // [{1975},{1974},....] --->[{1974},{1975},....]
     const copyMoviesArray = [...moviesArray];
     const orderedArray = copyMoviesArray.sort((a, b) => {
         if (a.year < b.year) return -1; // a is less than b

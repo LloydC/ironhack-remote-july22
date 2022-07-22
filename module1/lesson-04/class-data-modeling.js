@@ -64,7 +64,6 @@ teacher2.goSleep();
 class TeachingAssistant extends Teacher {
     constructor(name, age, city, programmingLanguages = []){
         super(name, age, city, programmingLanguages);
-
     }
 }
 

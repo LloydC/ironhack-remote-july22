@@ -159,7 +159,7 @@ const students = [
     ]
   }
 
-  console.log(school.classRooms[1].teacher.age);
+  // console.log(school.classRooms[1].teacher.age);
 
   // for(let i =0; i < school.classRooms.length; i++){
   //   for(let j = 0; j < school.classRooms[i].students.length; j++){
@@ -173,4 +173,27 @@ const students = [
 // }
 
 // console.log('studentsList: ', studentsList);
+const classRoom1 = {
+  teacher:  {
+    firstName: 'Greg',
+    lastName: 'Dach',
+    age: 38,
+    address: {
+      street: "3085 Kelton Knolls",
+      city: "Aldaside",
+      state: "Maryland"
+    }
+  }
+};
 
+Object.keys(classRoom1).forEach(function(prop) {
+  console.log(classRoom1[prop]);
+  if(typeof prop === 'object'){
+    Object.keys(prop).forEach(function(innerProp){
+      //console.log(prop[innerProp]);
+    })
+  }
+ 
+  // `prop` is the property name
+  // `data[prop]` is the property value
+});
