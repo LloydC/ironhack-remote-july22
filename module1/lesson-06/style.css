@@ -1,0 +1,7 @@
+.hide {
+    display: none;  /*hiding whichever element has that property set on*/
+}
+
+.show {
+    display: block;
+}
