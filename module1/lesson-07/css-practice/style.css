@@ -1,0 +1,109 @@
+html, body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;}
+
+html {
+    font-size: 10px;
+}
+
+    body{
+        font-size: 1.6rem; /* 16px */
+    }
+
+nav {
+    width: 100vw;
+    height: 200px;
+    background-color: cornflowerblue; 
+    font-size: 1.5em; /* 15px */
+}
+
+nav > ul {
+    height: 200px;
+    font-size: 1.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* flex-direction: column; */
+    flex-flow: row-reverse wrap;
+    /* margin-left: 5rem;
+    margin-right: 5rem; */
+}
+
+nav > li {
+    /* flex-grow: 1; */
+    
+}
+
+.li-item {
+    align-self: center;
+}
+
+ul > li {
+    color:aquamarine;
+    font-size: 1.6em; /* 16px */
+    flex-shrink: 1;
+}
+
+
+#menu > .list-item > a {
+   color:bisque;
+   background-color: blueviolet;
+  }
+
+ul em {
+    color: red;
+}
+
+#three {
+    background-color: pink;
+}
+
+#three + li {
+    background-color: brown;
+}
+
+h1,
+h2 {
+  color: blue;
+}
+
+li[id="a"]{
+    background-color: cadetblue;
+}
+
+li[id="b"]{
+    background-color: crimson;
+}
+
+@media only screen 
+  and (min-device-width: 0px) 
+  and (max-device-width: 375px) {
+    body{
+        background-color: blue;
+    }
+
+    ul {
+        color:brown;
+    }
+}
+
+  @media only screen and (min-width: 375px) and (max-width: 768px) {
+    body {
+      background-color: green;
+    }
+
+    ul {
+        color: burlywood;
+    }
+  }
+
+  @media only screen and (min-width: 768px) {
+    body{
+        background-color: indigo;
+    }
+
+    ul {
+        color: blueviolet;
+    } 
+  }
