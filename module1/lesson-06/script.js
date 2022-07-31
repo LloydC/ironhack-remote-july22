@@ -1,5 +1,3 @@
-const addCat = document.getElementById('add-cat');
-
 const addCatPicture = function () {
 
     const catCard = document.createElement('div'); // create div element
@@ -29,5 +27,6 @@ const removeCat = function(e) {
     catCard.remove();
 }
 
+const addCat = document.getElementById('add-cat');
 //addCat.onclick = addCatPicture;
 addCat.addEventListener('click', addCatPicture); // event listener to add Cat picture on click

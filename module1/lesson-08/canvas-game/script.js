@@ -97,6 +97,17 @@ class Component {
   }
 
   crashWith(obstacle) {
+    // obstacleX range --> [obstacle.left(), obstacle.right()]
+    // obstacleY range --> [obstacle.top(), obstacle.bottom()]
+    // Player Right Side Collision happens if player.x and player.y are both in obstacle range
+    if(obstacle.left() <= this.x && this.x <= obstacle.right() && obstacle.top() <= this.y && this.y <= obstacle.bottom()){
+      return true
+    }
+    
+    // [player.x, player.x + width]
+    // Player Bottom Side Collision happens if player.x is in obstacle range and player.y+height is equal to obstacle.y
+    // Player Top Side Collision happens if player.x is in obstacle range and player.x+width is equal to obstacle.y+height
+
     // this.bottom() > obstacle.top()
     // this.top() < obstacle.bottom()
     // this.right > obstacle.left()
