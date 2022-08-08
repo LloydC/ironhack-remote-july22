@@ -1,7 +1,7 @@
 const port = 4000; // gateway to my express server
 const express = require('express'); // loading the express package
 const app = express(); // start my express server 
-console.log(__dirname)
+
 app.use(express.static('public')); // setting the 'public' folder as the folder containing all the static files
 
 app.get('/cats', (req, res) => { // defining a route for a "Get" request at the '/cats' endpoint
