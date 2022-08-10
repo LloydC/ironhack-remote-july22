@@ -1,0 +1,11 @@
+<h1>{{title}}</h1>
+<p>{{paragraph}}</p>
+    {{#if users}}
+    <ul>
+        {{#each users}}
+         <li>{{this}}</li>
+        {{/each}}
+        {{else}}
+        <p>No users</p>
+    </ul>
+    {{/if}}

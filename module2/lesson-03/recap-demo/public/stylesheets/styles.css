@@ -1,0 +1,31 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #395B64;
+    color:#A5C9CA;
+}
+
+nav {
+    width: 100vw;
+    height: 100px;
+    background-color: #2C3333;
+    display: flex;
+}
+
+ul {
+    width: inherit;
+    display: flex;
+    flex-direction: column;
+}
+li {
+    width: inherit;
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+a {
+   text-decoration: none;
+   color:#A5C9CA; 
+}

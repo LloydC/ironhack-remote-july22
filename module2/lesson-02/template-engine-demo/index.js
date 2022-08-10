@@ -1,10 +1,10 @@
-const port = 3001;
+const port = 3002;
 const express = require('express');
 const hbs = require('hbs');
 
 const app = express();
 
-hbs.registerPartials(__dirname + '/views/partials')
+hbs.registerPartials(__dirname + '/views/partials')// setting up the partials folder to work in handlebars
 
 app.use(express.static('public'))
 
