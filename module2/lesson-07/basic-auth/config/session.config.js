@@ -21,7 +21,7 @@ module.exports = app => {
       },
       store: new MongoStore({
         mongoUrl: 'mongodb://localhost/basic-auth',
-        ttl: 1000 * 60 * 60 * 24 // 60sec * 60min * 24h => 1 day      
+        ttl: 60 * 60 * 24 // 60sec * 60min * 24h => 1 day      
       })
     })
   );

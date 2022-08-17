@@ -4,29 +4,28 @@ const router = require("express").Router();
 
 const User = require('../models/User.model');
 
+const { isLoggedIn, isLoggedOut } = require('../middleware/route-guard')
 /* GET Signup page */
-router.get("/signup", (req, res) => {
+router.get("/signup", isLoggedOut, (req, res) => {
   console.log('req session', req.session);
   res.render("auth/signup");
 });
 
-router.post("/signup", (req, res) => {
+router.post("/signup", isLoggedOut, (req, res) => {
   const { username, email, password } = req.body;
  
   bcrypt
     .genSalt(saltRounds)
     .then(salt => bcrypt.hash(password, salt))
-    .then(hashedPassword => {
+    .then(passwordHash => {
       return User.create({
         username,
         email,
-        passwordHash: hashedPassword
+        passwordHash,
       });
     })
-    .then(userFromDB => {
-      // console.log('Newly created user is: ', userFromDB);
-      req.session.currentUser = userFromDB;
-      res.redirect('/auth/profile');
+    .then( () => {
+      res.redirect('/auth/login');
     })
     .catch(error => console.log(error));
   //Authentication logic goes here
@@ -34,18 +33,17 @@ router.post("/signup", (req, res) => {
 })
 
 /* GET Profile page */
-router.get("/profile", (req, res) => {
-  console.log('profile page', req.session);
-  const { username } = req.session.currentUser;
+router.get("/profile", isLoggedIn, (req, res) => {
+    const { username } = req.session.currentUser;
     res.render("auth/profile", {username});
 });
 
-router.get("/login", (req, res) => {
+router.get("/login", isLoggedOut, (req, res) => {
   console.log('req session', req.session);
   res.render("auth/login");
 });
 
-router.post("/login", (req, res) => {
+router.post("/login", isLoggedOut, (req, res) => {
   const { email, password } = req.body;
 
  // Check for empty fields
@@ -67,7 +65,7 @@ router.post("/login", (req, res) => {
         } else if (bcrypt.compareSync(password, user.passwordHash)) {
           // 4. if both are correct, let the user in the app.
           req.session.currentUser = user;
-          res.render('auth/profile', user);
+          res.redirect('/auth/profile');
         } else {
           // 3. send an error message to the user if any of above is not valid,
           res.render('auth/login', { errorMessage: 'Incorrect password.' });
@@ -75,4 +73,12 @@ router.post("/login", (req, res) => {
       })
       .catch(err => console.log(err))
 })
+
+router.post('/logout', isLoggedIn, (req, res) => {
+  res.clearCookie('connect.sid');
+  req.session.destroy(()=>{
+    res.redirect('/auth/login')
+  })
+})
+
 module.exports = router;
