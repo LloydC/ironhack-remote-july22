@@ -1,0 +1,14 @@
+<h1>Edit a room</h1>
+
+<form action='/rooms/{{id}}/update' method='POST'>
+  <label for="">Name</label>
+  <input type="text" name="name" id="" value="{{name}}">
+
+  <label for="">Description</label>
+  <textarea name="description" id="" cols="30" rows="10" value="{{description}}"></textarea>
+
+  <label for="">Update image</label>
+  <input type="text" name="imageUrl" id="" value="{{imageUrl}}">
+
+  <button type="submit">Create room</button>
+</form>
