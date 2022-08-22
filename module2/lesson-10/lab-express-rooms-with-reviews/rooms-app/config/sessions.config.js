@@ -14,9 +14,6 @@ module.exports = app => {
         mongoUrl: 'mongodb://localhost/rooms-app',
         ttl: 60 * 60 * 24 // 60sec * 60min * 24h => 1 day      
       })
-    //   store: MongoStore.create({
-    //     mongoUrl: 'mongodb://localhost/rooms-app',
-    //   })
     })
   );
 };

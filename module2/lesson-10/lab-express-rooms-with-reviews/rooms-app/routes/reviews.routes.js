@@ -18,4 +18,12 @@ router.post('/create/:roomId', async (req, res) => {
     .catch(err => console.error(err))
 })
 
+router.post("/delete/:reviewId", (req, res) => {
+    const { reviewId } = req.params;
+    Review.findByIdAndDelete(reviewId)
+        .then(() => res.redirect('/rooms/list'))
+        .catch(err => console.error(err))
+
+})
+
 module.exports = router;

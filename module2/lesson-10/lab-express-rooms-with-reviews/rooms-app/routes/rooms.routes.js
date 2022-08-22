@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const { isLoggedIn, isOwner } = require('../middleware/route-guard')
+const fileUploader = require("../config/cloudinary.config");
 
 const Room = require('../models/Room.model');
 
@@ -9,7 +10,7 @@ router.get("/list", (req, res) => {
     Room.find()
         .populate("owner")
         .then(rooms => {
-            const loggedInNavigation = req.session.hasOwnProperty('currentUser');
+            const loggedInNavigation = req.session.hasOwnProperty('currentUser'); // check if user is loggedIn by looking if this property exist on req.session
             res.render('rooms/room-list', { rooms, loggedInNavigation })
         })
         .catch(err => console.error(err))
@@ -17,15 +18,15 @@ router.get("/list", (req, res) => {
 })
 
 router.get("/create", isLoggedIn, (req, res) => {
-    const loggedInNavigation = true;
-    res.render('rooms/add-room', {loggedInNavigation})
+    const loggedInNavigation = req.session.hasOwnProperty('currentUser');;
+    res.render('rooms/add-room', { loggedInNavigation })
 })
 
-router.post("/create", isLoggedIn, (req, res) => {
-    const { name, description, imageUrl } = req.body;
+router.post("/create", isLoggedIn, fileUploader.single("imageUrl"), (req, res) => {
+    const { name, description } = req.body;
+    const { path } = req.file;
     const { _id } = req.session.currentUser;
-    console.log('user id', _id)
-    Room.create({ name, description, imageUrl, owner:_id})
+    Room.create({ name, description, imageUrl: path, owner:_id})
         .then(newRoom =>{
             res.redirect('/rooms/list')
         })
@@ -34,9 +35,9 @@ router.post("/create", isLoggedIn, (req, res) => {
 })
 
 router.get("/:roomId", (req, res) => {
-    const  _id = req.session?.currentUser?._id; // load property '_id' only if property 'currentUser' exists
+    const  loggedInUserId = req.session?.currentUser?._id; // load property '_id' only if property 'currentUser' exists
     const { roomId } = req.params;
-    Room.findOne({id: roomId})
+    Room.findOne({_id: roomId})
     .populate("owner reviews") // populate property 'owner' and 'reviews'
     .populate({ 
         path: 'reviews',
@@ -46,24 +47,34 @@ router.get("/:roomId", (req, res) => {
         } 
     })
     .then(room => {
-        const loggedInNavigation = req.session.hasOwnProperty('currentUser'); // check if user is loggedIn by looking if this property exist on req.session
-        const isNotOwner = _id !== room.owner._id.toString() && req.session.hasOwnProperty('currentUser');
-        res.render('rooms/room-details', { room, isNotOwner, loggedInNavigation })
+        const loggedInNavigation = req.session.hasOwnProperty('currentUser'); 
+        const isOwner = loggedInUserId  === room.owner._id.toString()
+        const isNotOwner = loggedInUserId  !== room.owner._id.toString() && req.session.hasOwnProperty('currentUser');
+        const changeableReviews = room.reviews.map(({_id, user, comment}) => {
+            if(user._id.toString() === loggedInUserId ){
+                return {_id, user, comment, isChangeable: true}
+            }
+            else {
+                return {_id, user, comment}
+            }
+        })
+        res.render('rooms/room-details', { room, changeableReviews, isOwner, isNotOwner, loggedInNavigation })
     })
     .catch(err => console.error(err))
     
 })
 
 router.get("/edit/:roomId", isLoggedIn, (req, res) => {
-    const loggedInNavigation = true;
+    const loggedInNavigation = req.session.hasOwnProperty('currentUser'); 
     res.render('rooms/edit-room', {loggedInNavigation})
 })
 
-router.post("/edit/:roomId", isOwner, (req, res) => {
+router.post("/edit/:roomId", isOwner, fileUploader.single("imageUrl"), (req, res) => {
     const { roomId } = req.params;
-    const roomUpdateInfo = req.body;
+    const { name, description }  = req.body;
+    const { path } = req.file;
 
-    if(roomUpdateInfo.imageUrl === ''){
+    if(path === ''){
         Room.findById(roomId)
             .then(room => {
                 return Room.updateOne({name: roomUpdateInfo.name, description: roomUpdateInfo.description})
@@ -71,8 +82,7 @@ router.post("/edit/:roomId", isOwner, (req, res) => {
             .then(() => res.redirect('/rooms/list'))
     }
     else{
-        console.log(roomUpdateInfo)
-        Room.findByIdAndUpdate(roomId, roomUpdateInfo, {new: true})
+        Room.findByIdAndUpdate(roomId, { name, description, imageUrl: path } , {new: true})
             .then(() => {
                 res.redirect('/rooms/list');
             })
