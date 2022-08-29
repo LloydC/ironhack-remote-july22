@@ -8,7 +8,7 @@ const { isLoggedIn, isLoggedOut } = require('../middleware/route-guard')
 
 /* GET Signup page */
 router.get("/signup", (req, res) => {
-  const loggedInNavigation = false;
+  const loggedInNavigation = req.session.hasOwnProperty('currentUser');
   res.render("auth/signup", {loggedInNavigation});
 });
 
@@ -34,12 +34,12 @@ router.post("/signup", (req, res) => {
 /* GET Profile page */
 router.get("/profile", (req, res) => {
     const { fullName } = req.session.currentUser;
-    const loggedInNavigation = true;
+    const loggedInNavigation = req.session.hasOwnProperty('currentUser');
     res.render("auth/profile", {fullName, loggedInNavigation});
 });
 
 router.get("/login", (req, res) => {
-  const loggedInNavigation = false;
+  const loggedInNavigation = req.session.hasOwnProperty('currentUser');
   res.render("auth/login", {loggedInNavigation});
 });
 

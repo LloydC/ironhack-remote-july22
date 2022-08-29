@@ -18,7 +18,7 @@ router.get("/list", (req, res) => {
 })
 
 router.get("/create", isLoggedIn, (req, res) => {
-    const loggedInNavigation = req.session.hasOwnProperty('currentUser');;
+    const loggedInNavigation = req.session.hasOwnProperty('currentUser');
     res.render('rooms/add-room', { loggedInNavigation })
 })
 
