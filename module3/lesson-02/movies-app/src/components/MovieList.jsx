@@ -7,7 +7,7 @@ export const MovieList = () => {
     const [moviesList, setMoviesList] = useState(movies)
     const dramaMovies = moviesList.filter(({genre}) => genre.includes("Drama"));
     const actionMovies = moviesList.filter(({genre}) => genre.includes("Action"));
-    const horrorMovies = moviesList.filter(({genre}) => genre.includes("Horror"));
+    // const horrorMovies = moviesList.filter(({genre}) => genre.includes("Horror"));
 
 
     const handleChange = (event) => {
