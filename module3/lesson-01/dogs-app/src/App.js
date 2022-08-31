@@ -5,7 +5,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <span><i class="fa-thin fa-0"></i></span>
+      {/* <span><i class="fa-thin fa-0"></i></span> */}
       <DogList />
     </div>
   );
