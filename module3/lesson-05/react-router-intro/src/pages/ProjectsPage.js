@@ -24,7 +24,7 @@ const ProjectsPage = ({ projectsData }) => {
         {projects.map(project => {
             return (
                 <div key={project._id}>
-                    <h3><Link to={`/projects/${project._id}`}>{project.name}</Link></h3>
+                    <h3><Link to={`/projects/${project._id}`}>{project.name}</Link></h3> 
                     <p>{project.technologies}</p>
                 </div>
                 )
