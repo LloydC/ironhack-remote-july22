@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
  
@@ -18,6 +18,29 @@ function EditProjectPage(props) {
         .then(() => navigate(`/projects/${projectId}`) ) // navigate the user to the project list/project details page
         .catch(err => console.log(err))
   }
+
+  const deleteProject = () => {                    //  <== ADD
+    // Make a DELETE request to delete the project
+    axios
+      .delete(`${API_URL}/api/projects/${projectId}`)
+      .then((response) => {
+        console.log('delete response', response)
+        // Once the delete request is resolved successfully
+        // navigate back to the list of projects.
+        navigate("/projects");
+      })
+      .catch((err) => console.log(err));
+  };  
+
+  useEffect(()=>{
+    axios.get(`${API_URL}/api/projects/${projectId}`)
+        .then(response => {
+            const { title, description } = response.data;
+            setTitle(title);
+            setDescription(description)
+        })
+        .catch(err => console.log(err))
+  }, [projectId])
   
   return (
     <div className="EditProjectPage">
@@ -41,6 +64,7 @@ function EditProjectPage(props) {
  
         <input type="submit" value="Submit" />
       </form>
+      <button onClick={deleteProject}>Delete Project</button>
     </div>
   );
 }
