@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { ThemeContext } from './../context/theme.context';
+import { ThemeContext } from '../context/theme.context';
 
 const profileImg = 'https://i.imgur.com/i1gsj0v.png';
  
