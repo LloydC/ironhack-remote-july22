@@ -1,0 +1,20 @@
+{
+    "en-US": {
+        "navigationBar": {
+            "links": ["Home", "Projects"]
+        },
+        "homePage" : {
+            "mainHeading":  "Hi! My Name is ..."
+        }
+    },
+    "fr-FR": {
+        "navigationBar": {
+            "links": ["Home", "Projets"]
+        },
+        "homePage" : {
+            "mainHeading": "Bonjour! je m'appelle ..."
+        }
+
+    }
+    
+}

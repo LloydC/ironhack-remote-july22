@@ -9,7 +9,7 @@ mongoose
     console.error('Error connecting to mongo', err)
   });
 
-  const Cat = require('./models/cat');
+const Cat = require('./models/cat');
 const Food = require('./models/food');
   // const Food = require('../models/food');
 // Query the db for Wiggles

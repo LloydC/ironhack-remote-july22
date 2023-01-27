@@ -11,20 +11,20 @@ function App() {
   const [unit, setUnit] = useState("C");
   const [list, setList] = useState(cities);
 
-  const citiesWithIds = (arrayOfCities) => {
-    return arrayOfCities.map(({city, icon, temperature}) => {
-      const generatedId = uuid();
+  // const citiesWithIds = (arrayOfCities) => {
+  //   return arrayOfCities.map(({city, icon, temperature}) => {
+  //     const generatedId = uuid();
 
-      return {
-        id: generatedId,
-        city,
-        icon,
-        temperature
-      }
-    })
-  }
+  //     return {
+  //       id: generatedId,
+  //       city,
+  //       icon,
+  //       temperature
+  //     }
+  //   })
+  // }
 
-  const newArray = citiesWithIds(cities);
+  // const newArray = citiesWithIds(cities);
 
   // how do we take away an item from the list?
   // use Math.random() to get a random index
